@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 # setup the account specific API-Client key/secret and
@@ -35,7 +37,7 @@ module Halotk
     attr_reader :api_keys
 
     def initialize(config_file = nil)
-      @config_file = (config_file or ENV['HALO_API_KEY_FILE'])
+      @config_file = (config_file || ENV['HALO_API_KEY_FILE'])
     end
 
     def api_keys
@@ -43,7 +45,9 @@ module Halotk
     end
 
     def load_from_environment
-      fail "[ERROR] loading api_keys: #{e}" and exit if ENV['HALO_ID'].nil? && ENV['HALO_SECRET_KEY'].nil?
+      if ENV['HALO_ID'].nil? && ENV['HALO_SECRET_KEY'].nil?
+        raise("[ERROR] loading api_keys: #{e}") && exit
+      end
       {
         'halo' => {
           'key_id' => ENV['HALO_ID'],
@@ -55,8 +59,8 @@ module Halotk
 
     def load_accounts
       @config_file.nil? ? load_from_environment : YAML.load_file(@config_file)
-    rescue => e
-      raise "[ERROR] loading api_keys: #{e}" and exit
+    rescue StandardError => e
+      raise("[ERROR] loading api_keys: #{e}") && exit
     end
   end
 end
