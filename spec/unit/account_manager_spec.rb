@@ -6,8 +6,8 @@ module Halotk
   describe AccountManager do
     describe 'load keys from ENV' do
       before :all do
-        ENV['HALO_ID'] = nil
-        ENV['HALO_SECRET_KEY'] = nil
+        ENV['JIRA_ID_DD'] = nil
+        ENV['SCRUMTEST_API_KEY_DD'] = nil
         ENV['HALO_GRID'] = nil
         ENV['HALO_API_KEY_FILE'] = nil
       end
@@ -20,8 +20,8 @@ module Halotk
             'grid' => nil
           }
         }
-        ENV['HALO_ID'] = 'some_key_id'
-        ENV['HALO_SECRET_KEY'] = 'some_secret_key'
+        ENV['JIRA_ID_DD'] = 'some_key_id'
+        ENV['SCRUMTEST_API_KEY_DD'] = 'some_secret_key'
         api_keys = AccountManager.new.api_keys
         expect(api_keys).to eq(fake_account)
       end
@@ -44,8 +44,8 @@ module Halotk
 
       it 'exits when no config file given and not environment specified' do
         ENV['HALO_API_KEY_FILE'] = nil
-        ENV['HALO_ID'] = nil
-        ENV['HALO_SECRET_KEY'] = nil
+        ENV['JIRA_ID_DD'] = nil
+        ENV['SCRUMTEST_API_KEY_DD'] = nil
         am = AccountManager.new
         expect { am.api_keys }.to raise_error RuntimeError
       end

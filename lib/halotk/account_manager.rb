@@ -30,7 +30,7 @@ require 'yaml'
 # export HALO_API_KEY_FILE
 #
 # Alternatively, set the environment variables for
-# HALO_ID and HALO_SECRET_KEY.
+# JIRA_ID_DD and SCRUMTEST_API_KEY_DD.
 
 module Halotk
   class AccountManager
@@ -45,13 +45,13 @@ module Halotk
     end
 
     def load_from_environment
-      if ENV['HALO_ID'].nil? && ENV['HALO_SECRET_KEY'].nil?
+      if ENV['JIRA_ID_DD'].nil? && ENV['SCRUMTEST_API_KEY_DD'].nil?
         raise("[ERROR] loading api_keys: #{e}") && exit
       end
       {
         'halo' => {
-          'key_id' => ENV['HALO_ID'],
-          'secret_key' => ENV['HALO_SECRET_KEY'],
+          'key_id' => ENV['JIRA_ID_DD'],
+          'secret_key' => ENV['SCRUMTEST_API_KEY_DD'],
           'grid' => ENV['HALO_GRID']
         }
       }
